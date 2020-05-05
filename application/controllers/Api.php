@@ -34,6 +34,11 @@ class Api extends CI_Controller
         $d = $this->M_ad->getMaxTrx();
         echo json_encode($d);
 	}	
+	public function getJUser($hp)
+	{
+        $d = $this->M_ad->getJUser($hp);
+        echo json_encode($d);
+	}	
 	public function getJumlahOrder()
 	{
         $d = $this->M_ad->getJumlahOrder();
@@ -59,10 +64,30 @@ class Api extends CI_Controller
 		$st = $this->input->post('st');
 		$outlet = $this->input->post('cab');
 		$address = $this->input->post('alamat');
-
+		$dd = $this->M_ad->cekUser($hp);
+		if($this->M_ad->cekUser($hp)){			 
+			// echo$hp;
+			$this->M_ad->insertInvoice($hp,$nama,$makanan,$jumlah,$trx,$st,$outlet,$address,true);
+		}else{
+			// echo $dd->id;
+			$this->M_ad->insertUser($nama,$hp);			
+			$this->M_ad->insertInvoice($hp,$nama,$makanan,$jumlah,$trx,$st,$outlet,$address,false);
+			// $this->M_ad->del($dd->id,$hp);			
+		}		
 		// echo "$nama.$hp.$makanan.$jumlah.$st.$cab.$trx";
 
-		$this->M_ad->insertInvoice($hp,$nama,$makanan,$jumlah,$trx,$st,$outlet,$address);
+		// $this->M_ad->del();
+
+		// $this->M_ad->insertInvoice("526666","iman","1","3","100","8","1","swd");
+		// $this->M_ad->insertInvoice("526666","iman","1","3","100","8","1","swd");
+		// $this->M_ad->insertInvoice("526666","iman","1","3","100","8","1","swd");
+
+
+		
+	}
+	public function insertUser($n,$hp)
+	{
+		$this->M_ad->insertUser($n,$hp);
 		// $this->M_ad->insertInvoice("62818903738083","iman","1","3","3");
 	}
 	public function promo()

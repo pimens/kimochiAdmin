@@ -22,6 +22,8 @@ class M_ad extends CI_model
 		$desk = $data['desk'];
 		$h= $data['h'];
 		return $this->db->query("insert into makanan values ('','$j','$h','$t','$desk',$cat,0)");
+		// return $this->db->query("insert into makanan values ('','adas','55','asd','asdsad',1,0)");
+
 	}	
 	function editMakanan($data)
 	{
@@ -46,30 +48,52 @@ class M_ad extends CI_model
 		return $this->db->query("select * from makanan where id=$id")->result();		
 	}
 	//end maknan
-
-
-
+	public function cekUser($hp)
+	{
+		return $this->db->query("select * from user where nomorhp=$hp")->row();	
+	}
 	//api
 	function insertInvoice($hp,$n,$m,$j,$trx,$st,$cab,$alamat)
 	{
 		// $alamat = "xxx";
 		$d=$this->db->query("select * from user where nomorhp=$hp")->row();
-		if($d){
-			$t = date("Y-m-d");
-			$this->db->query("insert into trx values('',$d->id,$m,$cab,$j,$st,now(),$trx,'$alamat',0)");			
-		}else{
-			$this->db->query("insert into user values('','$n','$hp')");
-			$d=$this->db->query("select * from user where nomorhp=$hp")->row();			
-			$t = date("Y-m-d");
-			$this->db->query("insert into trx values('',$d->id,$m,$cab,$j,$st,now(),$trx,'$alamat',0)");
+		// echo $d->id;
+		// if($d){
+		// 	$d=$this->db->query("select * from user where nomorhp=$hp")->row();
+		return $this->db->query("insert into trx values('',$d->id,$m,$cab,$j,$st,now(),$trx,'$alamat',0)");			
+		// // }else{
+		// 	$tt=$this->db->query("select * from trx where notrx=$trx")->row();
+		// 	// if(!$tt){
+		// 		$this->db->query("insert into user values('','$n','$hp')");
+		// 	// }
+		// 	$d=$this->db->query("select * from user where nomorhp=$hp")->row();			
+		// 	return $this->db->query("insert into trx values('',$d->id,$m,$cab,$j,$st,now(),$trx,'$alamat',0)");
 			// echo "insert into trx values('',$d->id,$m,$cab,$j,$st,now(),$trx,'$alamat',0)";
-		}	
+		// }	
 		// echo "insert into trx values('',$d->id,$m,$cab,$j,$st,now(),$trx,'$alamat',0)";
 
 	}
 	public function getMaxTrx()
 	{
 		return $this->db->query("select max(notrx) as x from trx")->result();		
+	}
+	public function del($id,$hp)
+	{
+		return $this->db->query("delete from user where nomorhp='$hp' and id!=$id");
+		// $tt=$this->db->query("select * from trx where notrx=102")->row();
+		// 	if($tt){
+		// 		echo "ada";
+		// 		// $this->db->query("insert into user values('','$n','$hp')");
+		// 	}		
+	}
+	public function insertUser($n,$hp)
+	{
+		// echo $n;
+		return $this->db->query("insert into user values('','$n','$hp')");
+	}
+	public function getJUser($hp)
+	{
+		return $this->db->query("select count(*) as j from user where nomorhp=$hp")->result();		
 	}
 	public function getJumlahOrder()
 	{
