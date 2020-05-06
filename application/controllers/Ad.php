@@ -24,7 +24,7 @@ class Ad extends CI_Controller
 		$this->load->view('admin/v_sidebar', $d);
 		$this->load->view('admin/v_dash');
 	}
-	
+
 	public function getMakananById($id)
 	{
 		$data['title'] = 'Edit Makanan';
@@ -107,21 +107,21 @@ class Ad extends CI_Controller
 		$t = 0;
 		$total = 0;
 
-		$l = count($q)-1;
-		for ($j = 0; $j < count($q)-1; $j++) {
-			$data[++$i] = array($in, $q[$j]->tanggal, $q[$j]->p, $q[$j]->m, $q[$j]->jumlah, $q[$j]->subtotal);			
+		$l = count($q) - 1;
+		for ($j = 0; $j < count($q) - 1; $j++) {
+			$data[++$i] = array($in, $q[$j]->tanggal, $q[$j]->p, $q[$j]->m, $q[$j]->jumlah, $q[$j]->subtotal);
 			$in++;
 			$t = $t + $q[$j]->subtotal;
 			$total = $total + $q[$j]->subtotal;
-			if ($q[$j+1]->notrx == $q[$j]->notrx) {				
+			if ($q[$j + 1]->notrx == $q[$j]->notrx) {
 			} else {
-				$data[++$i] = array('', ' ', ' ', ' ', ' ', $t);				
+				$data[++$i] = array('', ' ', ' ', ' ', ' ', $t);
 				$t = 0;
-			}			
+			}
 		}
-		$data[++$i] = array($in, $q[$l]->tanggal, $q[$l]->p, $q[$l]->m, $q[$l]->jumlah, $q[$l]->subtotal);			
+		$data[++$i] = array($in, $q[$l]->tanggal, $q[$l]->p, $q[$l]->m, $q[$l]->jumlah, $q[$l]->subtotal);
 		$in++;
-		$data[++$i] = array('', ' ', ' ', ' ', 'Total Pemasukan ', $total);				
+		$data[++$i] = array('', ' ', ' ', ' ', 'Total Pemasukan ', $total);
 
 		// foreach ($q as $row) {     
 		// 	$data[++$i] = array($in,$row->tanggal,$row->p,$row->m,$row->jumlah,$row->subtotal);
@@ -135,8 +135,8 @@ class Ad extends CI_Controller
 		// 	}
 		// 	$tmp = $row->notrx;	
 		// } 
-		echo array_to_csv($header);                  
-		echo array_to_csv($data,'InvoiceLengkap.csv');                  
+		echo array_to_csv($header);
+		echo array_to_csv($data, 'InvoiceLengkap.csv');
 		die();
 	}
 
@@ -179,7 +179,7 @@ class Ad extends CI_Controller
 		$data['desk'] = $this->input->post('desk');
 		$config['upload_path']    = "./data/promo/";
 		$config['allowed_types']  = 'jpg';
-		$config['max_size']       = '200000';		
+		$config['max_size']       = '200000';
 		$this->load->library('upload', $config);
 		if (!$this->upload->do_upload("thumb")) {
 			echo json_encode(array("status" => FALSE));
@@ -201,10 +201,10 @@ class Ad extends CI_Controller
 		$this->load->view('admin/v_head', $data);
 		$this->load->view('admin/v_sidebar', $d);
 		$this->load->view('admin/v_promo');
-	}	
+	}
 	public function getPromoById($id)
 	{
-		$data['title'] = 'Edit Makanan';
+		$data['title'] = 'Edit Promo';
 		$d['promo'] = $this->M_ad->getPromoById($id);
 		$this->load->view('admin/v_head', $data);
 		$this->load->view('admin/v_sidebar', $d);
@@ -241,6 +241,52 @@ class Ad extends CI_Controller
 	public function deletePromo($id)
 	{
 		$this->M_ad->deletePromo($id);
+		echo json_encode(array("status" => TRUE));
+	}
+
+	///cabang
+	public function cabang()
+	{
+
+		$data['title'] = 'Cabang Adminnn';
+		$d['cabang'] = $this->M_ad->getCabang();
+
+		$this->load->view('admin/v_head', $data);
+		$this->load->view('admin/v_sidebar', $d);
+		$this->load->view('admin/v_cabang');
+	}
+	public function insertCabang()
+	{
+		$data['nama'] = $this->input->post('nama');
+		$data['alamat'] = $this->input->post('alamat');
+		$data['desk'] = $this->input->post('desk');
+		$data['t'] = ""; //preventif
+		$this->M_ad->insertCabang($data);
+		redirect('Ad/cabang');
+		//  echo json_encode(array("status" => TRUE));				   
+
+	}
+	public function getCabangById($id)
+	{
+		$data['title'] = 'Edit Cabang';
+		$d['promo'] = $this->M_ad->getCabangById($id);
+		$this->load->view('admin/v_head', $data);
+		$this->load->view('admin/v_sidebar', $d);
+		$this->load->view('admin/v_editCabang');
+	}
+	public function editCabang()
+	{
+		$data['nama'] = $this->input->post('nama');
+		$data['desk'] = $this->input->post('desk');
+		$data['alamat'] = $this->input->post('alamat');
+		$data['id'] = $this->input->post('id');
+		$data['thumb'] = "";
+		$this->M_ad->editCabang($data);
+		redirect('Ad/cabang');
+	}
+	public function deleteCabang($id)
+	{
+		$this->M_ad->deleteCabang($id);
 		echo json_encode(array("status" => TRUE));
 	}
 }

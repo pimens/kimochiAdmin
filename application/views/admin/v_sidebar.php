@@ -24,6 +24,9 @@
                     <a href="<?php echo"$u" ?>ad/promo"><i class="fa fa-diamond"></i> <span class="nav-label">Promo</span></a>
                 </li>
                 <li>
+                    <a href="<?php echo"$u" ?>ad/cabang"><i class="fa fa-diamond"></i> <span class="nav-label">Cabang</span></a>
+                </li>
+                <li>
                     <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">Graphs</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li><a href="graph_flot.html">Flot Charts</a></li>

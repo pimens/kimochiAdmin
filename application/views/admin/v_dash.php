@@ -117,7 +117,7 @@
                                             <th>Nama Makanan</th>
                                             <!-- <th>Author</th> -->
                                             <th>Deskripsi</th>
-                                            <th>Jenis</th>
+                                            <!-- <th>Jenis</th> -->
                                             <th>harga</th>
                                             <th>thumbnail</th>
                                             <th>Action</th>
@@ -130,7 +130,6 @@
                                             echo "<tr>
                                             <td>$c->nama</td>										
 											<td>$c->deskripsi</td>			
-                                            <td>$c->kategori</td>	
                                             <td>$c->harga</td>		
 
 											<td> <img height='150' width='150' src='$u/$c->gambar' class='img-responsive' alt='Image'></td>																
@@ -150,7 +149,6 @@
                                             <th>Judul</th>
                                             <!-- <th>Author</th> -->
                                             <th>Deskripsi</th>
-                                            <th>tanggal</th>
                                             <th>harga</th>
                                             <th>thumbnail</th>
                                             <th>Action</th>

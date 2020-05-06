@@ -132,7 +132,36 @@ class M_ad extends CI_model
 		id_makanan=makanan.id and user.id=id_user  
 		ORDER BY `trx`.`notrx`  desc")->result();		
 	}
-
+	//cabang
+	function insertCabang($data)
+	{
+		$j = $data['nama'];
+		$t = $data['thumb'];
+		$desk = $data['desk'];
+		$alamat = $data['alamat'];
+		return $this->db->query("insert into cabang values ('','$alamat','$desk','$j')");
+	}	
+	function getCabangById($id)
+	{
+		return $this->db->query("select * from cabang where id=$id")->result();
+	}	
+	function editCabang($data)
+	{
+		$j = $data['nama'];
+		$t = "";
+		$id = $data['id'];
+		$desk = $data['desk'];
+		$alamat = $data['alamat'];
+		if($t==""){
+			return $this->db->query("update cabang set nama='$j',deskripsi='$desk', alamat='$alamat' where id=$id");
+		}else{
+			return $this->db->query("update cabang set gambar='$t',judul='$j', deskripsi='$desk' where id=$id");
+		}
+	}	
+	public function deleteCabang($id)
+	{
+		return $this->db->query("delete from cabang where id=$id");		
+	}
 
 	//promo
 	function insertPromo($data)
