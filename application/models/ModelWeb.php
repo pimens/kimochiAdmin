@@ -1,5 +1,5 @@
 <?php
-class M_ad extends CI_model
+class ModelWeb extends CI_model
 {
 	function __construct()
 	{
@@ -13,45 +13,58 @@ class M_ad extends CI_model
 	function getAllData()
 	{
 		return $this->db->query("select * from makanan")->result();
-	}			
-	function getAllUser()
-	{
-		return $this->db->query("select * from user")->result();
-	}	
-	//makanan		
-	function insertMakanan($data)
-	{
-		$j = $data['judul'];
-		$t = $data['thumb'];
-		$cat = $data['cat'];
-		$desk = $data['desk'];
-		$h= $data['h'];
-		return $this->db->query("insert into makanan values ('','$j','$h','$t','$desk',$cat,0)");
-		// return $this->db->query("insert into makanan values ('','adas','55','asd','asdsad',1,0)");
-
-	}	
-	function editMakanan($data)
-	{
-		$j = $data['judul'];
-		$t = $data['thumb'];
-		$cat = $data['cat'];
-		$id = $data['id'];
-		$desk = $data['desk'];
-		$h= $data['h'];
-		if($t==""){
-			return $this->db->query("update makanan set nama='$j', kategori=$cat, deskripsi='$desk',harga='$h' where id=$id");
-		}else{
-			return $this->db->query("update makanan set gambar='$t',nama='$j', kategori=$cat, deskripsi='$desk',harga='$h' where id=$id");
-		}
-	}	
+	}		
+	
 	public function deleteMakanan($id)
 	{
 		return $this->db->query("delete from makanan where id=$id");		
 	}
-	public function getMakananById($id)
+	//statistik
+	public function getJumlahOrder()
 	{
-		return $this->db->query("select * from makanan where id=$id")->result();		
+		$today = date("Y-m-d");   
+		$d = $this->db->query("select count(*) as jo from (SELECT DISTINCT notrx FROM `trx` where tanggal='$today') as d")->row();
+		if(!$d){
+			$d=0;
+		}else{
+			$d=$d->jo;
+		}
+		return $d;		
 	}
+	public function getJumlahOrderBulanan()
+	{
+		$d = $this->db->query("select count(*) as jo from (SELECT DISTINCT notrx,month(tanggal) as tgl FROM `trx`) as d where d.tgl=month(now())")->row();		
+		if(!$d){
+			$d=0;
+		}else{
+			$d=$d->jo;
+		}
+		return $d;
+	}
+	public function getPemasukan()
+	{
+		$today = date("Y-m-d");   
+		$d = $this->db->query("select sum(subtotal) as total from trx where tanggal='$today'")->row();
+		if(!$d){
+			$d=0;
+		}else{
+			$d=$d->total;
+		}
+		return $d;
+	}
+	public function getPemasukanMonth()
+	{
+		$d = $this->db->query("select sum(subtotal) as total from (select month(tanggal) as t, subtotal from trx) as d where d.t=month(now()) GROUP by d.t")->row();
+		if(!$d){
+			$d=0;
+		}else{
+			$d=$d->total;
+		}
+		return $d;		
+	}
+
+
+	
 	//end maknan
 	public function cekUser($hp)
 	{
@@ -100,31 +113,7 @@ class M_ad extends CI_model
 	{
 		return $this->db->query("select count(*) as j from user where nomorhp=$hp")->result();		
 	}
-	public function getJumlahOrder()
-	{
-		$today = date("Y-m-d");   
-		return $this->db->query("select count(*) as jo from (SELECT DISTINCT notrx FROM `trx` where tanggal='$today') as d")->row();		
-	}
-	public function getJumlahOrderBulanan()
-	{
-		$today = date("Y-m-d");   
-		return $this->db->query("select count(*) as jo from (SELECT DISTINCT notrx,month(tanggal) as tgl FROM `trx`) as d where d.tgl=month(now())")->row();		
-	}
-	public function getPemasukan()
-	{
-		$today = date("Y-m-d");   		
-		return $this->db->query("select sum(subtotal) as total from trx where tanggal='$today'")->row();		
-	}
-	public function getPemasukanMonth()
-	{
-		$d = $this->db->query("select sum(subtotal) as total from (select month(tanggal) as t, subtotal from trx) as d where d.t=month(now()) GROUP by d.t")->row();
-		if(!$d){
-			$d=0;
-		}else{
-			$d=$d->total;
-		}
-		return $d;		
-	}
+	
 	public function jumlahPelanggan()
 	{
 		$today = date("Y-m-d");   

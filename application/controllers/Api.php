@@ -1,11 +1,27 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
+// if (!defined('BASEPATH')) exit('No direct script access allowed');
+header("Access-Control-Allow-Methods: GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Content-Length, Accept-Encoding");
+header('Access-Control-Allow-Origin: *');
 class Api extends CI_Controller
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('M_ad');
-		
+		$this->load->model('M_ad');		
+	}
+	public function login()
+	{
+		$data['email'] = $this->input->post('email');
+		$data['password'] = $this->input->post('password');
+		$result = $this->M_ad->getUserByEmail($data['email'], $data['password']);
+		echo json_encode($result);
+		// if ($result) {
+		// 	echo json_encode($result);
+		// } else {
+		// 	echo "gagal".$data['email'];
+			
+		// }
 	}
 	public function index()
 	{
