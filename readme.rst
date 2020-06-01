@@ -1,1 +1,1 @@
-admin kimochii 
+admin kimochi-backend
