@@ -241,12 +241,42 @@ class WebApi extends CI_Controller
 		$this->M_ad->deletePromo($id);
 		echo json_encode(array("status" => TRUE));
 	}
-
+//cabang
 	public function getCabang()
 	{
 		$d = $this->ModelWeb->getCabang();
 		echo json_encode($d);
 	}
+	public function insertCabang()
+	{
+		$data['nama'] = $this->input->post('nama');
+		$data['alamat'] = $this->input->post('alamat');
+		$data['desk'] = $this->input->post('desk');
+		$data['t'] = ""; //preventif
+		$this->M_ad->insertCabang($data);
+		//  echo json_encode(array("status" => TRUE));				   
+	}
+	public function deleteCabang($id)
+	{
+		$this->M_ad->deleteCabang($id);
+		echo json_encode(array("status" => TRUE));
+	}
+	public function getCabangById($id)
+	{
+		$d = $this->M_ad->getCabangById($id);
+		echo json_encode($d);		
+	}
+	public function editCabang()
+	{
+		$data['nama'] = $this->input->post('nama');
+		$data['desk'] = $this->input->post('desk');
+		$data['alamat'] = $this->input->post('alamat');
+		$data['id'] = $this->input->post('id');
+		$data['thumb'] = "";
+		$this->M_ad->editCabang($data);
+	}
+
+
 	public function getTrx($hp)
 	{
 		$d = $this->ModelWeb->getTrx($hp);

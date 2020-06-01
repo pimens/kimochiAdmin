@@ -45,6 +45,11 @@ class Api extends CI_Controller
         $d = $this->M_ad->getAllData();
         echo json_encode($d);
 	}	
+	public function getMakananOffset($start,$offset)
+	{
+        $d = $this->M_ad->getMakananOffset($start,$offset);
+        echo json_encode($d);
+	}	
 	public function getMaxTrx()
 	{
         $d = $this->M_ad->getMaxTrx();
@@ -70,6 +75,11 @@ class Api extends CI_Controller
         $d = $this->M_ad->jumlahPelanggan();
         echo json_encode($d);
 	}	
+	public function addMakanan()
+	{
+		$nama = $this->input->post('nama');
+		echo $nama."ini tes";
+	}
 	public function insertInvoice()
 	{
 		$hp = $this->input->post('hp');

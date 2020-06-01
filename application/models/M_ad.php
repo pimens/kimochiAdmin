@@ -14,6 +14,10 @@ class M_ad extends CI_model
 	{
 		return $this->db->query("select * from makanan")->result();
 	}			
+	function getMakananOffset($s,$off)
+	{
+		return $this->db->query("select * from makanan limit $s,$off")->result();
+	}		
 	function getAllUser()
 	{
 		return $this->db->query("select * from user")->result();
