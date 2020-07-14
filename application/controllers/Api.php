@@ -16,12 +16,6 @@ class Api extends CI_Controller
 		$data['password'] = $this->input->post('password');
 		$result = $this->M_ad->getUserByEmail($data['email'], $data['password']);
 		echo json_encode($result);
-		// if ($result) {
-		// 	echo json_encode($result);
-		// } else {
-		// 	echo "gagal".$data['email'];
-			
-		// }
 	}
 	public function index()
 	{
@@ -100,21 +94,19 @@ class Api extends CI_Controller
 			$this->M_ad->insertInvoice($hp,$nama,$makanan,$jumlah,$trx,$st,$outlet,$address,false);
 			// $this->M_ad->del($dd->id,$hp);			
 		}		
-		// echo "$nama.$hp.$makanan.$jumlah.$st.$cab.$trx";
-
-		// $this->M_ad->del();
-
-		// $this->M_ad->insertInvoice("526666","iman","1","3","100","8","1","swd");
-		// $this->M_ad->insertInvoice("526666","iman","1","3","100","8","1","swd");
-		// $this->M_ad->insertInvoice("526666","iman","1","3","100","8","1","swd");
-
-
-		
 	}
+	public function insertCabang()
+	{
+		$alamat = $this->input->post('alamat');
+		$nama = $this->input->post('nama');
+		$this->M_ad->insertCabangX($nama,$alamat);
+	}
+
+	
+	///-=======================================
 	public function insertUser($n,$hp)
 	{
 		$this->M_ad->insertUser($n,$hp);
-		// $this->M_ad->insertInvoice("62818903738083","iman","1","3","3");
 	}
 	public function promo()
 	{

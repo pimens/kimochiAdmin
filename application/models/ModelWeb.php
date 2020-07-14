@@ -7,9 +7,12 @@ class ModelWeb extends CI_model
 	}
 	public function getUserByEmail($email, $pass)
 	{
-		return $this->db->query("select * from admin where email = '$email' and password = '$pass'")->row();
+		return $this->db->query("select * from admin where email = '$email' and password = '$pass'")->result();
 	}
-
+	public function getMakananById($id)
+	{
+		return $this->db->query("select * from makanan where id=$id")->row();		
+	}
 	function getAllData()
 	{
 		return $this->db->query("select * from makanan")->result();

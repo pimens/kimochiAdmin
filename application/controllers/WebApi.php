@@ -52,7 +52,7 @@ class WebApi extends CI_Controller
 	}
 	public function getMakananById($id)
 	{
-		$d = $this->M_ad->getMakananById($id);
+		$d = $this->ModelWeb->getMakananById($id);
 		echo json_encode($d);
 	}
 	public function editMakanan()

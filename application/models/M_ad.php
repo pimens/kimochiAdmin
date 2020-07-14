@@ -9,7 +9,10 @@ class M_ad extends CI_model
 	{
 		return $this->db->query("select * from admin where email = '$email' and password = '$pass'")->row();
 	}
-
+	function insertCabangX($n,$a)
+	{
+		return $this->db->query("insert into cabang values ('','$a','teeeeeeeeeee','$n')");
+	}		
 	function getAllData()
 	{
 		return $this->db->query("select * from makanan")->result();
